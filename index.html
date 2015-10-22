@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>俺のハチ公前 Ver.1</title>
+		<script type="text/javascript">
+			var map;
+			var message;
+			function initMap() 
+			{
+				get_location();
+			}
+
+			function get_location()
+			{
+				document.getElementById("area_name").innerHTML = "位置情報取得します。";
+				if(navigator.geolocation)
+				{
+					navigator.geolocation.getCurrentPosition
+					(successCallback,errorCallback);
+				}
+				else
+				{
+					message = "本ブラウザではGeolocationが使えません";
+					document.getElementById("area_name").innterHTML = message;
+				}
+			}
+
+			function successCallback(pos)
+			{
+				var Position_latitude = pos.coords.latitude;
+				var Position_longitude = pos.coords.longitude;
+				initialize(Position_latitude,Position_longitude);
+			}
+
+			function errorCallback(error)
+			{
+				message = "位置情報が許可されていません";
+				document.getElementById("area_name").innerHTML = message;
+			}
+
+			function initialize(x,y)
+			{
+				document.getElementById("area_name").innerHTML = message;
+				var myLatlng = new google.maps.LatLng(x,y);
+				var mapOptions = {
+					zoom: 17,
+					center: myLatlng,
+					mapTypeID: google.maps.MapTypeId.HYBRID
+				}
+				var map = new google.maps.Map(document.getElementById("map"),mapOptions);
+			}
+
+		</script>
+		<style type="text/css">
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { height: 100%; }
+		</style>
+	</head>
+	<body>
+		<div id="map"></div>
+		<div id="area_name"></div>
+		<script async defer
+	      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTvDcEPsstIn69Eg97D-mv5gwYaMiww7U&callback=initMap">
+	    </script>
+	</body>
+</html>
