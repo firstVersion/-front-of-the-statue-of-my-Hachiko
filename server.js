@@ -4,7 +4,7 @@ var server = require('http').createServer(handler),
 	set= require('./settings');
 
 server.listen(set.port, set.host);
-console.log("->"+set.host+":"+set.port);
+console.log("-> "+set.host+":"+set.port);
 
 function handler(req,res)
 {
