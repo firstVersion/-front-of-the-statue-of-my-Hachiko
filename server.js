@@ -1,4 +1,4 @@
-var server 	= require('http'),
+var server 	= require('http').createServer(handler),
 	io 		= require('socket.io'),
 	fs 		= require('fs'),
 	path 	= require('path'),
