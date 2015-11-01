@@ -61,10 +61,11 @@ var server 	= require('http').createServer(handler),
 		res.write("<!DOCTYPE html><html><head></head>"+set.message[statusCode]+"<body></body></html>")
 		res.end();
 	}
-
 (function(port,host){
-	server.listen(port, host);
+
+  server.listen(port, host);
 	console.log("-> "+host+":"+port);
+
 })( process.argv[3]||set.port, process.argv[4]||set.host );
 
 
