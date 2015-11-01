@@ -17,10 +17,8 @@ var server 	= require('http').createServer(handler),
 		else
 			return sendError(req,res,501);
 
-		fs.stat(filePath, function(err, stats){
-
-			console.log("error",err);
-			
+		fs.stat(filePath, function(err, stats)
+    {
 			if(err)
 			{
 				if( (/ENOENT/).test(err.message) ) return sendError(req,res,404);
@@ -35,24 +33,25 @@ var server 	= require('http').createServer(handler),
 
 	  function sendFile(req, res, filePath) {
 
-	    var file = fs.createReadStream(filePath);
-	    file.on("readable", function() {
+	    var stream = fs.createReadStream(filePath);
+	    stream.on("readable", function() {
 	      res.writeHead(200, {"Content-Type":set.mime[path.extname(filePath)] || "text/plain"});
 	    });
 
-	    file.on("data", function(data) {
+	    stream.on("data", function(data) {
 	      res.write(data);
-	      console.log(res);
 	    });
 
-	    file.on("close", function() {
-	      res.end();
+	    stream.on("close", function() {
 	      console.log("<- " + set.message[200] + ": " + req.method + " " + req.url);
 	    });
-
-	    file.on("error", function(err) {
+	    stream.on("error", function(err) {
 	      sendError(req, res, 500);
 	    });
+      
+      stream.on('end', function(){
+        res.end();
+      });
 	  }
 
 	function sendError(req,res,statusCode)
