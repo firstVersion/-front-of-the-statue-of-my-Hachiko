@@ -5,13 +5,15 @@
     <title>俺のハチ公前 Ver.0.01</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="map.js"></script>
+    <script src="/socket.io/socket.io.js"></script>  
+    <script type="text/javascript">
+       var test = io.connect('http://192.168.33.10:1377/test');
+    </script>
   </head>
   <body>
     <div id="map"></div>
     <div id="area_name"></div>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTvDcEPsstIn69Eg97D-mv5gwYaMiww7U&callback=initMap">
-      </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTvDcEPsstIn69Eg97D-mv5gwYaMiww7U&callback=initMap"></script>
   </body>
 </html>
 
