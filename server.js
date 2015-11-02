@@ -1,5 +1,5 @@
 var server 	= require('http').createServer(handler),
-	io 		= require('socket.io'),
+	io 		= require('socket.io').listen(server),
 	fs 		= require('fs'),
 	path 	= require('path'),
 	url 	= require('url'),
@@ -10,7 +10,7 @@ var server 	= require('http').createServer(handler),
 	{	
 		var filePath;
 		var pathName = url.parse(req.url).pathname;
-
+    console.log(pathName);
 
 		if(req.method === "GET")
 			filePath = path.join(set.root, pathName);
@@ -31,7 +31,8 @@ var server 	= require('http').createServer(handler),
 		console.log(req.method,filePath);
 	}
 
-	  function sendFile(req, res, filePath) {
+  function sendFile(req, res, filePath) 
+  {
 
 	    var stream = fs.createReadStream(filePath);
 	    stream.on("readable", function() {
@@ -52,7 +53,7 @@ var server 	= require('http').createServer(handler),
       stream.on('end', function(){
         res.end();
       });
-	  }
+	}
 
 	function sendError(req,res,statusCode)
 	{
@@ -60,11 +61,19 @@ var server 	= require('http').createServer(handler),
 		res.write("<!DOCTYPE html><html><head></head>"+set.message[statusCode]+"<body></body></html>")
 		res.end();
 	}
-(function(port,host){
 
-  server.listen(port, host);
-	console.log("-> "+host+":"+port);
+  (function(port,host){
+    server.listen(port, host);
+	  console.log("-> "+host+":"+port);
+  })( process.argv[3]||set.port, process.argv[4]||set.host );
 
-})( process.argv[3]||set.port, process.argv[4]||set.host );
+
+
+var test = io.of('/test').on('connection',function(socket)
+{
+  socket.on('emit_from_client',function(data){
+    console.log(data);
+  });
+});
 
 
