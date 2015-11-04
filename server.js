@@ -71,9 +71,12 @@ var server 	= require('http').createServer(handler),
 
 var test = io.of('/test').on('connection',function(socket)
 {
+  socket.join("member");
   socket.on('emit_from_client',function(data){
-    console.log(data);
+    console.log(data.lon);
+    socket.broadcast.to("member").emit('emit_from_server',{"lat":data.lat,"lon":data.lon});
   });
 });
+
 
 
