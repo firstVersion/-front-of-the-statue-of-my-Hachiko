@@ -73,7 +73,7 @@ var test = io.of('/test').on('connection',function(socket)
 {
   socket.join("member");
   socket.on('emit_from_client',function(data){
-    console.log(data.lon);
+    console.log(data.lon,data.lat);
     socket.broadcast.to("member").emit('emit_from_server',{"lat":data.lat,"lon":data.lon});
   });
 });
