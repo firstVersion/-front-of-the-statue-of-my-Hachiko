@@ -7,7 +7,16 @@
     <script type="text/javascript" src="map.js"></script>
     <script src="/socket.io/socket.io.js"></script>  
     <script type="text/javascript">
-       var test = io.connect('http://192.168.33.10:1377/test');
+
+      var test = io.connect('http://192.168.33.10:1377/test');
+      navigator.geolocation.getCurrentPosition(function(pos)
+          {
+          var lat = pos.coords.latitude;
+          var lon = pos.coords.longitude;
+          console.log(pos.coords.latitude,pos.coords.longitude);
+          test.emit('emit_from_client',{"lat":lat,"lon":lon});
+          },function(err){});
+
     </script>
   </head>
   <body>
